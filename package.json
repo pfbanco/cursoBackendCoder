@@ -1,0 +1,24 @@
+{
+  "name": "primera-entrega",
+  "version": "1.0.0",
+  "description": "CURSO BACKEND CODER HOUSE",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfbanco/cursoBackendCoder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pfbanco/cursoBackendCoder/issues"
+  },
+  "homepage": "https://github.com/pfbanco/cursoBackendCoder#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
