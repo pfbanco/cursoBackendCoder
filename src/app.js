@@ -1,11 +1,22 @@
 import express from "express";
 import ProductManager from "./ProductManager.js";
 
+//import cartRouter from "./router/cart.router.js"
+//import productsRouter from "./router/prodcts.router.js"
+
 const app = express();
 const productManager = new ProductManager("Products.json");
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//Routes
+//app.use("/cart", cartRouter)
+//app.use("/products", productsRouter)
+
+
 app.get("/", (req, res) => {
-  res.send("Hola a todos desde express!");
+  res.json("Hola a todos desde express!");
 });
 
 app.get("/products", async (req, res) => {
@@ -13,16 +24,40 @@ app.get("/products", async (req, res) => {
   const products = await productManager.getProducts();
   if (limit) {
     const limitedProducts = products.slice(0, limit);
-    res.send(limitedProducts);
+    res.json(limitedProducts);
   } else {
-    res.send({ products });
+    res.json({ products });
   }
 });
 
 app.get("/products/:idProduct", async (req, res) => {
-	const {idProduct}  = req.params;
-	const product = await productManager.getProductById(+idProduct);
-	res.send({ product });
+  const { idProduct } = req.params;
+  const product = await productManager.getProductById(+idProduct);
+  res.json({ product });
+});
+
+app.delete("/prodcts", async (req, res) => {
+  const message = await productManager.deleteProducts();
+  res.json({ message });
+});
+
+app.delete("/products/:idProduct", async (req, res) => {
+  const { idProduct } = req.params;
+  const message = await productManager.deleteProductsById(+idProduct);
+  res.json({ message });
+});
+
+app.post("/products", async (req, res) => {
+  const obj = req.body;
+  const newProduct = await productManager.addProduct(obj);
+  res.json({ message: "Product created", product: newProduct });
+});
+
+app.put("/products/:idProduct", async (req, res) => {
+  const { idProduct } = req.params;
+  const updateProd = req.body;
+  const product = await productManager.updateProduct(+idProduct, updateProd);
+  res.json({ product });
 });
 
 app.listen(8080, () => {

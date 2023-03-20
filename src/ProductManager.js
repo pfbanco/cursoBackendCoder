@@ -72,7 +72,12 @@ export default class ProductManager {
   deleteProductsById = async (id) => {
     const products = await this.getProducts();
     const newArray = products.filter((p) => p.id !== id);
-    await fs.promises.writeFile(this.path, JSON.stringify(newArray));
+    if(products.length == newArray.length){
+      return "Product does not exist"
+    }else {
+      await fs.promises.writeFile(this.path, JSON.stringify(newArray));
+      return "Product deleted"
+    }
   };
 
   updateProduct = async (id, obj) => {
@@ -85,6 +90,7 @@ export default class ProductManager {
     newProduct.id = id
     products.splice(indexProduct, 1, newProduct);
     await fs.promises.writeFile(this.path, JSON.stringify(products));
+    return "Product update"
   };
 
   #generarId = (products) => {
