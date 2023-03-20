@@ -1,13 +1,36 @@
-/*import { Router } from "express";
+import { Router } from "express";
+import { CartManager } from "../CartManager.js";
+import { __dirname } from "../utils.js";
 
-const router = Router()
+const router = Router();
+const cartManager = new CartManager(__dirname + "/Carts.json");
 
-router.get()
+//CREAR CARRITO
+router.get("/", (req, res) => {
+  res.send("CARRITO");
+});
 
-router.post()
+router.post("/", async (req, res) => {
+  const newCart = await cartManager.createCart();
+  res.json({ cart: newCart });
+});
 
-router.put()
+//BUSCAR UN CARRITO
+router.get("/:idCart", async (req, res) => {
+  const { idCart } = req.params;
+  const cart = await cartManager.getCart(+idCart);
+  res.json({ cart });
+});
 
-router.delete()
+//AGREGAR PRODUCTO A UN CARRITO
+router.post("/:idCart/product/:idProduct", async (req, res) => {
+  const { idCart, idProduct } = req.params;
+  const addProduct = await cartManager.addProductsToCart(+idCart, +idProduct);
+  res.json({ message: addProduct });
+});
 
-export default  router*/
+//router.put();
+
+//router.delete();
+
+export default router;

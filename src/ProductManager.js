@@ -1,7 +1,5 @@
 import fs from 'fs'
 
-//const fs = require("fs");
-
 //Ejemplo de contructor de producto.
 class Product {
   constructor(title, description, price, thumbnail, code, stock) {
@@ -116,10 +114,6 @@ const product7 = new Product("Producto2", "Descripcion de producto", "$2000", "N
 const product8 = new Product("Producto3", "Descripcion de producto", "$2000", "No contiene", "ABC1210", 30);
 const product9 = new Product("Producto4", "Descripcion de producto", "$2000", "No contiene", "ABC1211", 30);
 const product10 = new Product("Producto5", "Descripcion de producto", "$2000", "No contiene", "ABC1212", 30);
-//PRODUCTO INCOMPLETO
-//const product2 = new Product("Producto2", "$3000", "No contiene", "ABC321", 30);
-//PRODUCTO CON MISMO CODIGO
-//const product3 = new Product("Producto3", "Descripcion de producto", "$25000", "No contiene", "ABC123", 30);
 
 /*async function prueba() {
   const manager = new ProductManager("Products.json");
