@@ -14,6 +14,12 @@ router.get("/", (req , res)=>{
     }
 });
 
+router.get("/:idProduct", async(req, res)=>{
+    const { idProduct } = req.params;
+    const product = await productManager.getProductById(+idProduct);
+    res.json({ product });
+});
+
 
 router.post()
 

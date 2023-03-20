@@ -1,18 +1,21 @@
 import express from "express";
 import ProductManager from "./ProductManager.js";
 
-//import cartRouter from "./router/cart.router.js"
+//import cartsRouter from "./router/carts.router.js"
 //import productsRouter from "./router/prodcts.router.js"
+//import { __dirname } from "./utils.js"
 
 const app = express();
+const PORT = 8080
 const productManager = new ProductManager("Products.json");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//app.use(express.static(__dirname+"/public"))
 
 //Routes
-//app.use("/cart", cartRouter)
-//app.use("/products", productsRouter)
+//app.use("/api/carts", cartsRouter)
+//app.use("/api/products", productsRouter)
 
 
 app.get("/", (req, res) => {
@@ -60,6 +63,6 @@ app.put("/products/:idProduct", async (req, res) => {
   res.json({ product });
 });
 
-app.listen(8080, () => {
-  console.log("ESCUCHANDO EL PUERTO 8080");
+app.listen(PORT, () => {
+  console.log(`ESCUCHANDO EL PUERTO ${PORT}`);
 });
