@@ -1,11 +1,29 @@
-import fs from 'fs'
+import fs from "fs";
 
 //Ejemplo de contructor de producto.
 class Product {
-  constructor(title, description, price, thumbnail, code, stock) {
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
+  constructor(
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock,
+    status,
+    category
+  ) {
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !thumbnail ||
+      !code ||
+      !stock ||
+      !status ||
+      !category
+    ) {
       console.log("Error: Every fild in required");
-      return;
+      return null;
     }
     this.title = title;
     this.description = description;
@@ -13,19 +31,19 @@ class Product {
     this.thumbnail = thumbnail;
     this.code = code;
     this.stock = stock;
+    this.status = status;
+    this.category = category;
   }
 }
 
-export default class ProductManager {
+export class ProductManager {
   constructor(path) {
     this.path = path;
   }
 
   addProduct = async (product) => {
-    if(Object.keys(product).length === 0){
-      console.log("Error: Product empty")
-      return
-    }
+    Object.assign(new Product(), product);
+    if (Object.keys(product).length != 8) return;
     const products = await this.getProducts();
     if (products.length > 0 && products.some((p) => p.code === product.code)) {
       console.log("Error: The product code already exists");
@@ -54,7 +72,7 @@ export default class ProductManager {
     if (product) {
       return product;
     } else {
-      return "Product not found";
+      return null;
     }
   };
 
@@ -70,11 +88,11 @@ export default class ProductManager {
   deleteProductsById = async (id) => {
     const products = await this.getProducts();
     const newArray = products.filter((p) => p.id !== id);
-    if(products.length == newArray.length){
-      return "Product does not exist"
-    }else {
+    if (products.length == newArray.length) {
+      return "Product does not exist";
+    } else {
       await fs.promises.writeFile(this.path, JSON.stringify(newArray));
-      return "Product deleted"
+      return "Product deleted";
     }
   };
 
@@ -85,10 +103,10 @@ export default class ProductManager {
       return "Product not found";
     }
     const newProduct = { ...products[indexProduct], ...obj };
-    newProduct.id = id
+    newProduct.id = id;
     products.splice(indexProduct, 1, newProduct);
     await fs.promises.writeFile(this.path, JSON.stringify(products));
-    return "Product update"
+    return "Product update";
   };
 
   #generarId = (products) => {
@@ -102,18 +120,87 @@ export default class ProductManager {
   };
 }
 
-
 //PRODUCTO COMPLETO
-const product1 = new Product("Producto1", "Descripcion de producto", "$2000", "No contiene", "ABC123", 30);
-const product2 = new Product("Producto2", "Descripcion de producto", "$2000", "No contiene", "ABC124", 30);
-const product3 = new Product("Producto3", "Descripcion de producto", "$2000", "No contiene", "ABC125", 30);
-const product4 = new Product("Producto4", "Descripcion de producto", "$2000", "No contiene", "ABC126", 30);
-const product5 = new Product("Producto5", "Descripcion de producto", "$2000", "No contiene", "ABC127", 30);
-const product6 = new Product("Producto1", "Descripcion de producto", "$2000", "No contiene", "ABC128", 30);
-const product7 = new Product("Producto2", "Descripcion de producto", "$2000", "No contiene", "ABC129", 30);
-const product8 = new Product("Producto3", "Descripcion de producto", "$2000", "No contiene", "ABC1210", 30);
-const product9 = new Product("Producto4", "Descripcion de producto", "$2000", "No contiene", "ABC1211", 30);
-const product10 = new Product("Producto5", "Descripcion de producto", "$2000", "No contiene", "ABC1212", 30);
+const product1 = new Product(
+  "Producto1",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC123",
+  30
+);
+const product2 = new Product(
+  "Producto2",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC124",
+  30
+);
+const product3 = new Product(
+  "Producto3",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC125",
+  30
+);
+const product4 = new Product(
+  "Producto4",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC126",
+  30
+);
+const product5 = new Product(
+  "Producto5",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC127",
+  30
+);
+const product6 = new Product(
+  "Producto1",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC128",
+  30
+);
+const product7 = new Product(
+  "Producto2",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC129",
+  30
+);
+const product8 = new Product(
+  "Producto3",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC1210",
+  30
+);
+const product9 = new Product(
+  "Producto4",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC1211",
+  30
+);
+const product10 = new Product(
+  "Producto5",
+  "Descripcion de producto",
+  "$2000",
+  "No contiene",
+  "ABC1212",
+  30
+);
 
 /*async function prueba() {
   const manager = new ProductManager("Products.json");
@@ -130,21 +217,5 @@ const product10 = new Product("Producto5", "Descripcion de producto", "$2000", "
   await manager.addProduct(product10);
   //await manager.addProduct(product2);
   //await manager.addProduct(product3);
-
-  //BUSCAR POR ID
-  //await manager.getProductById(2)
-
-  //BORRAR POR ID
-  //await manager.deleteProductsById(1)
-
-  //BORRAR TODO EL DOCUMENTO
-  //await manager.deleteProducts()
-
-  //MODIFICAR EL DOCUMENTO
-  await manager.updateProduct(3,{title: 'Nuevo producto'})
-
-  //TRAER TODOS LOS PRODUCTOS
-  console.log(await manager.getProducts());
-}
 
 prueba();*/

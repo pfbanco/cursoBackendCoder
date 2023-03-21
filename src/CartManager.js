@@ -1,4 +1,8 @@
 import fs from "fs";
+import { ProductManager } from "./ProductManager.js";
+import { __dirname } from "./utils.js";
+
+const productManager = new ProductManager(__dirname + "/Products.json");
 
 export class CartManager {
   constructor(path) {
@@ -40,7 +44,12 @@ export class CartManager {
     if (!cart) return "Cart does not exist";
     //Validar producto
 
-    const productIndex = cart.products.findIndex((p) => p.product === idProduct);
+    const prod = await productManager.getProductById(idProduct);
+    if (!prod) return "Product does not exist";
+    
+    const productIndex = cart.products.findIndex(
+      (p) => p.product === idProduct
+    );
     if (productIndex === -1) {
       cart.products.push({ product: idProduct, quantity: 1 });
     } else {
@@ -50,7 +59,6 @@ export class CartManager {
     const cartIndex = cartsFile.findIndex((c) => c.id === idCart);
     cartsFile.splice(cartIndex, 1, cart);
     await fs.promises.writeFile(this.path, JSON.stringify(cartsFile));
-
     return "Product added";
   }
 

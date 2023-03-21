@@ -5,11 +5,11 @@ import { __dirname } from "../utils.js";
 const router = Router();
 const cartManager = new CartManager(__dirname + "/Carts.json");
 
-//CREAR CARRITO
 router.get("/", (req, res) => {
   res.send("CARRITO");
 });
 
+//CREAR CARRITO
 router.post("/", async (req, res) => {
   const newCart = await cartManager.createCart();
   res.json({ cart: newCart });
