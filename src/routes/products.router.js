@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { ProductManager } from "../ProductManager.js";
+import { ProductManager } from "../controllers/ProductManager.js";
 import { __dirname } from "../utils.js";
 
 const router = Router();
-const productManager = new ProductManager(__dirname + "/Products.json");
+const productManager = new ProductManager(__dirname + "/db/Products.json");
 
 const products = [];
 

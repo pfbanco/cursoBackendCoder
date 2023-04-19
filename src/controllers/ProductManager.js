@@ -8,9 +8,9 @@ class Product {
     price,
     thumbnail,
     code,
-    stock,
     status,
-    category
+    category,
+    stock
   ) {
     if (
       !title ||
@@ -18,9 +18,9 @@ class Product {
       !price ||
       !thumbnail ||
       !code ||
-      !stock ||
       !status ||
-      !category
+      !category ||
+      !stock
     ) {
       console.log("Error: Every fild in required");
       return null;
@@ -30,9 +30,9 @@ class Product {
     this.price = price;
     this.thumbnail = thumbnail;
     this.code = code;
-    this.stock = stock;
     this.status = status;
     this.category = category;
+    this.stock = stock;
   }
 }
 
@@ -121,7 +121,7 @@ export class ProductManager {
 }
 
 //PRODUCTO COMPLETO
-const product1 = new Product(
+/*const product1 = new Product(
   "Producto1",
   "Descripcion de producto",
   "$2000",
@@ -200,22 +200,4 @@ const product10 = new Product(
   "No contiene",
   "ABC1212",
   30
-);
-
-/*async function prueba() {
-  const manager = new ProductManager("Products.json");
-  //AGREGAR PRODUCTOS
-  await manager.addProduct(product1);
-  await manager.addProduct(product2);
-  await manager.addProduct(product3);
-  await manager.addProduct(product4);
-  await manager.addProduct(product5);
-  await manager.addProduct(product6);
-  await manager.addProduct(product7);
-  await manager.addProduct(product8);
-  await manager.addProduct(product9);
-  await manager.addProduct(product10);
-  //await manager.addProduct(product2);
-  //await manager.addProduct(product3);
-
-prueba();*/
+);*/
